@@ -1,0 +1,102 @@
+﻿@model IEnumerable<MyLibraryApp.Models.Borrow>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Borrowed books</h1>
+
+
+
+<form asp-action="Index">
+   <div class="row">
+    <div class=col-6 >
+    <a asp-action="Create" class="btn btn-primary "><i class="bi bi-plus-square"></i>&nbsp; Borrow a book</a>
+    </div>
+     <div class="col-6 text-end ">
+          <input type="checkbox" style="position:absolute" name="oldBorrows" id="OldBorrows" value="old"/>
+            <label for="OldBorrows" style="font-size:23px ">&ensp; Show all borrows</label>
+        </div>   
+</div>
+    <div class="input-group md-form form-sm form-2 p1-0">
+       
+         <input name="readerID" class="form-control  " type="text" placeholder="Search by reader id or Isbn" aria-label="Search" />
+        <div class="input-group-append">
+
+            <span class="input-group-text red lightne-3" id="basic-text1">
+               <i class="bi bi-search"></i>
+            </span>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Isbn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reader)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BorrowedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReturnedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+          @{if (Model == null)
+            {
+                <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+            }
+            else{
+
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Isbn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reader.ReaderId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnedDate)
+            </td>
+            <td>
+
+                @if (item.ReturnedDate > DateTime.Now)
+                    {
+                        <a asp-action="GiveBack" asp-route-id="@item.IdBorrow" class="btn btn-info "> Return the book</a> <b>&ensp;</b>
+                    }
+                <a asp-action="Edit" asp-route-id="@item.IdBorrow" class="btn btn-success"><i class="bi bi-pencil-square"></i></a> <b>&ensp;</b>
+                    
+                    
+                    <a asp-action="Delete" asp-route-id="@item.IdBorrow" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+            </td>
+        </tr>
+}}}
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+       $ (function(){
+           $("#basic-text1").click(function () {
+               $("Form").submit();
+           })
+       });
+    </script>
+}

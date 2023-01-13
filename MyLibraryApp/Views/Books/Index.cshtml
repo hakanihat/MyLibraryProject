@@ -1,0 +1,125 @@
+﻿@model IEnumerable<MyLibraryApp.Models.Book>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Books</h1>
+
+<p>
+     <a asp-action="Create" class="btn btn-primary "><i class="bi bi-plus-square"></i>&nbsp; Add a book</a>
+</p>
+<form asp-action="Index">
+
+         <div class="row">   
+        <div class="col-2">
+                <label for="All"  class="control-label" ><b>All books</b></label>&ensp;
+                <input  type="radio" style="position:absolute" class="align-content-between" name="IsAvailable" id="All" value="all" checked />
+               </div>
+      <div class="col-2 " >
+                <label for="Yes" class="control-label"><b>Available books</b></label>&ensp;
+                <input type="radio" style="position:absolute" class="control-label" name="IsAvailable" id="Yes" value="yes" />
+                </div>  
+         <div class="col-2 ">
+                 <label for="No" class="control-label"><b>Not available books</b></label>&ensp;
+                <input type="radio" style="position:absolute" class="control-label" name="IsAvailable" id="No" value="no" />
+                </div> 
+    </div>
+          
+    <div class="input-group md-form form-sm form-2 p1-0">
+
+        <input name="bookname" class="form-control my-0 py-1 red-border" type="text" placeholder="Search by Title, Author or Genre" aria-label="Search" />
+        <div class="input-group-append">
+
+            <span class="input-group-text red lightne-3" id="basic-text1">
+               <i class="bi bi-search"></i>
+            </span>
+        </div>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Isbn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Publisher)
+            </th>
+            <th  >
+                @Html.DisplayNameFor(model => model.IsAvaiable)
+            </th>
+          @*  <th>
+                @Html.DisplayNameFor(model => model.Annotation)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+                    @{if (Model == null)
+            {
+                 <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+            }
+            else{
+        foreach (var item in Model) {
+            
+                <tr>
+                    <td>
+                @Html.DisplayFor(modelItem => item.Isbn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td >
+                @Html.DisplayFor(modelItem => item.Publisher.PubName)
+            </td>
+            <td  ><div class="input-group ">
+                @Html.DisplayFor(modelItem => item.IsAvaiable)
+                </div>
+            </td>
+            <td> 
+                <a asp-action="Details" asp-route-id="@item.Isbn" class="btn btn-info"><i class="bi bi-info-circle"></i>&nbsp;Details&nbsp;</a> 
+                <a asp-action="Edit" asp-route-id="@item.Isbn" class="btn btn-success"><i class="bi bi-pencil-square"></i>&nbsp;</a> 
+                <a asp-action="Delete" asp-route-id="@item.Isbn" class="btn btn-danger"><i class="bi bi-trash"></i>&nbsp;</a>
+            </td>
+        </tr>
+        
+        }}
+}
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+       $ (function(){
+           $("#basic-text1").click(function () {
+               $("Form").submit();
+           })
+       });
+
+
+    </script>
+}

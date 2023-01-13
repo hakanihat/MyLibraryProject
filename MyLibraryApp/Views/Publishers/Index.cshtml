@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MyLibraryApp.Models.Publisher>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Publishers</h1>
+
+<form asp-action="Index">
+   <div class="row">
+    <div class=col-6 >
+    <a asp-action="Create" class="btn btn-primary "><i class="bi bi-plus-square"></i>&nbsp; Add a publisher</a>
+    </div>
+    <div class="input-group md-form form-sm form-2 p1-0">
+       
+         <input name="publisherName" class="form-control  " type="text" placeholder="Search by publisher name" aria-label="Search" />
+        <div class="input-group-append">
+
+            <span class="input-group-text red lightne-3" id="basic-text1">
+               <i class="bi bi-search"></i>
+            </span>
+        </div>
+    </div> </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PubName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PubAdress)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PubName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PubAdress)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PublisherId" class="btn btn-success"><i class="bi bi-pencil-square"></i></a> <b>&ensp;</b>
+                <a asp-action="Delete" asp-route-id="@item.PublisherId" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+       $ (function(){
+           $("#basic-text1").click(function () {
+               $("Form").submit();
+           })
+       });
+    </script>
+}

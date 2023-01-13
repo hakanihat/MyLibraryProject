@@ -1,0 +1,41 @@
+﻿@model MyLibraryApp.Models.Publisher
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Publisher</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PubName" class="control-label"></label>
+                <input asp-for="PubName" class="form-control" />
+                <span asp-validation-for="PubName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PubAdress" class="control-label"></label>
+                <input asp-for="PubAdress" class="form-control" />
+                <span asp-validation-for="PubAdress" class="text-danger"></span>
+            </div>
+           <div class="container">
+                <div class="row">
+            <div class="col-2" >
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            <div class="col-5 offset-5" >
+            <a asp-action="Index" class="btn btn-secondary ">Go Back&nbsp;<i class="bi bi-arrow-90deg-left"></i> </a>
+            </div></div></div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
